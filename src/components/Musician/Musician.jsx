@@ -31,9 +31,11 @@ class Musician extends Component {
       }
 
       findMusician = () =>{
+          console.log("Musician ID: ")
+          console.log(this.props.user_id);
             const results = this.state.musicians.filter(musician =>
             musician.user === this.props.user_id)
-            if(results !== ''){
+            if(results.length !== 0){
                 this.setState({
                     existingMusician: true
                 });

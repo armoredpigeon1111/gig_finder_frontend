@@ -3,6 +3,7 @@ import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Musician from './components/Musician/Musician'
 import Fan from './components/Fan/Fan'
+import Home from './components/Home/Home';
 import { Redirect, Route, Switch} from "react-router";
 import {BrowserRouter} from "react-router-dom";
 import axios from 'axios';
@@ -87,10 +88,8 @@ getUserType = async (user_id) => {
             <Route path = '/' exact render={(props)=>{
               if(!user){
                 return (<Login {...props} loginUser={this.loginUser}/>);
-              }else if(this.state.isMusician){
-                return (<Musician {...props} user_id={this.state.user_id}/>);
               }else{
-                return (<Fan {...props} user_id={this.state.user_id}/>);
+                return (<Home {...props} user_id={this.state.user_id} isMusician={this.state.isMusician}/>);
               }
             }} />
 
