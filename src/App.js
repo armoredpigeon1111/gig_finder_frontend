@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+import Register from './components/Register/Register';
+import { Redirect, Route, Switch} from "react-router";
+import {BrowserRouter} from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -10,7 +12,11 @@ class App extends Component {
     return ( 
 
       <div>
-        <h1>Hello React App!</h1>
+        <BrowserRouter>
+          <Switch>
+            <Route path = "/register" component={Register}/>
+          </Switch>
+        </BrowserRouter>
       </div>
 
      );
