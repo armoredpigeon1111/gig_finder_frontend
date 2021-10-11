@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Musician from './components/Musician/Musician'
+import Fan from './components/Fan/Fan'
 import { Redirect, Route, Switch} from "react-router";
 import {BrowserRouter} from "react-router-dom";
 import axios from 'axios';
@@ -52,9 +53,6 @@ setUpUser(){
 loginUser = async (credentials) =>{
   try{
     let response = await axios.post("http://127.0.0.1:8000/api/auth/login/", credentials);
-    console.log("login response" + response);
-    console.log("Token: " + response.data.access);
-    // localStorage.setItem("token", response.data.access);
     localStorage.setItem("token", response.data.access);
     this.setUpUser();
   }
@@ -79,14 +77,25 @@ getUserType = async (user_id) => {
 
 
   render() { 
+    const user = this.state.user;
     return ( 
 
       <div>
         <BrowserRouter>
           <Switch>
-            <Route path = "/register" component={Register}/>
+
+            <Route path = '/' exact render={(props)=>{
+              if(!user){
+                return (<Login {...props} loginUser={this.loginUser}/>);
+              }else if(this.state.isMusician){
+                return (<Musician {...props} user_id={this.state.user_id}/>);
+              }else{
+                return (<Fan {...props} user_id={this.state.user_id}/>);
+              }
+            }} />
+
             <Route path = "/login" render={(props) =>(<Login {...props} loginUser={this.loginUser}/>)}/>
-            <Route path = "/musician" render={(props) =>(<Musician {...props} user_id={this.state.user_id} getUserType={this.getUserType}/>)}/>
+            <Route path = "/musician" render={(props) =>(<Musician {...props} user_id={this.state.user_id}/>)}/>
           </Switch>
         </BrowserRouter>
       </div>

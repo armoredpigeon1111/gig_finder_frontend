@@ -21,6 +21,7 @@ class Register extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.registerUser();
+        this.props.registerToggle();
     }
 
     registerUser = async () => {
