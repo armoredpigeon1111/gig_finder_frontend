@@ -44,7 +44,8 @@ loginUser = async (credentials) =>{
 
 getUserType = async (user_id) => {
   try{
-
+    let response = await axios.post(`http://127.0.0.1:8000/api/accounts/${this.state.user_id}/users`, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}});
+    console.log(response.data);
   }
   catch(error){
     console.log(error);
