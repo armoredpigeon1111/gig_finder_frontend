@@ -51,7 +51,7 @@ class Register extends Component {
                     <input type="password" name="password" onChange={this.handleChange} value={this.state.password}/><br />
                     <label>Email:</label>
                     <input type="email" name="email" onChange={this.handleChange} value={this.state.email}/><br />
-                    <input type="checkbox" name="isMusician" onChange={this.handleChange} value={this.state.isMusician}/>
+                    <input type="checkbox" name="isMusician" checked={this.state.isMusician} onChange={this.handleChange} />
                     <label>I'm a Musician</label><br />
                     <button type="submit">Register</button>
                 </form>
