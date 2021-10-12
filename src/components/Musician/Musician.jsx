@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import MusicianRegister from '../MusicianRegister/MusicianRegister';
-import CreateGig from '../CreateGig/CreateGig';
+import Gig from '../Gig/Gig';
 
 class Musician extends Component {
     constructor(props) {
@@ -47,7 +47,7 @@ class Musician extends Component {
         return ( 
             <div>
                 {this.state.existingMusician ?
-                <CreateGig user_id={this.props.user_id}/>
+                <Gig user_id={this.props.user_id}/>
                 :
                 <MusicianRegister user_id={this.props.user_id} musicianRegistered={this.musicianRegistered} findMusician={this.findMusician} getAllMusicians={this.getAllMusicians}/>
             }
