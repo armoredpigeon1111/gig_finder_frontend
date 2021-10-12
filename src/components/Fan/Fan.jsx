@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FanRegister from '../FanRegister/FanRegister';
 
 class Fan extends Component {
     constructor(props) {
@@ -8,7 +9,7 @@ class Fan extends Component {
     render() { 
         return ( 
             <div>
-                <h1>Fan Page</h1>
+                <FanRegister user_id={this.props.user_id} />
             </div>
          );
     }
