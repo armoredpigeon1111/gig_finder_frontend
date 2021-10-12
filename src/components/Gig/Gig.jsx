@@ -118,6 +118,13 @@ class CreateGig extends Component {
               console.log("GigList")             ;
               console.log(results);
           }
+
+          async deleteGig(gigID) {
+            const jwt = localStorage.getItem('token');
+            let response = await axios.delete(`http://127.0.0.1:8000/api/gigs/${gigID}/delete`, {headers: {Authorization: 'Bearer ' + jwt}});
+            console.log(response);
+            window.location.reload();
+          }
       
 
     render() { 
