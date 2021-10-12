@@ -27,17 +27,21 @@ class Login extends Component {
     }
 
     registerToggle = (event) => {
-        if (this.state.register === false)
+        console.log("Register Toggle");
+        if (this.state.register == false)
         {
+            this.state.register=true;
             this.setState({
                 regiter: true
             });
         }
         else{
+            this.state.register=false;
             this.setState({
-                register: this.state.register} 
+                register: false} 
             );
         }
+        console.log(this.state.register);
     }
 
     render() { 
@@ -48,15 +52,17 @@ class Login extends Component {
                 <Register registerToggle = {this.registerToggle}/>
                 
                 :
+                <div>
                 <form onSubmit={(event) => this.handleSubmit(event)}>
                     <label>Username:</label>
                     <input type="text" name="username" onChange={this.handleChange} value={this.state.username}/><br />
                     <label>Password:</label>
                     <input type="password" name="password" onChange={this.handleChange} value={this.state.password}/><br />
                     <button type="submit" >Login</button>
-                    <button onClick = {this.registerToggle}>Register</button>
+                    
                 </form>
-
+                <button onClick={() => this.registerToggle()}>Register</button>
+                </div>
                 }
             </div>
 

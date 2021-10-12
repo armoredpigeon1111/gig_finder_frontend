@@ -25,7 +25,7 @@ class Register extends Component {
     }
 
     registerUser = async () => {
-        debugger;
+        // debugger;
         const registrationInfo = {
             username: this.state.username,
             password: this.state.password,

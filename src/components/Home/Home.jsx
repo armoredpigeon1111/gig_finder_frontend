@@ -14,11 +14,23 @@ class Home extends Component {
 
     }
 
+    getAllMusicians = () =>{
+        this.props.getAllMusicians();
+    }
+
+    findMusician = () => {
+        this.props.findMusician();
+    }
+
     render() { 
 
         if(this.props.isMusician){
             return(
-                <Musician user_id={this.props.user_id} />
+                <Musician user_id={this.props.user_id} 
+                findMusician={this.findMusician}
+                getAllMusicians={this.getAllMusicians}
+                existingMusician={this.props.existingMusician}
+                />
             );
         }else{
             return(
