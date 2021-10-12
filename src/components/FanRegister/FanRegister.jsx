@@ -49,7 +49,7 @@ class FanRegister extends Component {
         return ( 
 
             <div>
-
+            <h1>Select your favorite genres</h1>
             <form onSubmit={(event) => this.handleSubmit(event)}>
                 <label>Genre 1</label>
                 <input type="text" name="genre1" onChange={this.handleChange} value={this.state.genre1} /><br />

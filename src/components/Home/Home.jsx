@@ -22,6 +22,14 @@ class Home extends Component {
         this.props.findMusician();
     }
 
+    getAllFans = () => {
+        this.props.getAllFans();
+    }
+
+    findFan = () => {
+        this.props.findFan();
+    }
+
     render() { 
 
         if(this.props.isMusician){
@@ -34,7 +42,10 @@ class Home extends Component {
             );
         }else{
             return(
-                <Fan user_id={this.props.user_id} />
+                <Fan user_id={this.props.user_id} 
+                getAllFans={this.getAllFans}
+                findFan={this.findFan}
+                existingFan={this.props.existingFan}/>
             );
         }
     }

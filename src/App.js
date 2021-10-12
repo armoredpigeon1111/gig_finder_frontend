@@ -18,25 +18,15 @@ class App extends Component {
       user_id: null,
       isMusician: false,
       musicians: [],
+      fans: [],
       existingMusician: false,
+      existingFan: false,
      }
   }
 
 
 componentDidMount(){
-  // const jwt = localStorage.getItem('token');
-  // try{
-  //   const user = jwtDecode(jwt);
-  //   this.setState({user});
-  //   this.setState({
-  //     user_id: user.user_id
-  //   })
-  //   console.log("ComponentDidMount");
-  //   this.getUserType(user.user_id);
-  // }
-  // catch(error){
-  //   console.log(error);
-  // }
+
 }
 
 setUpUser(){
@@ -47,7 +37,6 @@ setUpUser(){
     this.setState({
       user_id: user.user_id
     })
-    console.log("setUpUser");
     this.getUserType(user.user_id);
   }
   catch(error){
@@ -74,23 +63,16 @@ logoutUser = () =>{
     existingMusician: false,
   });
   console.log("Logout");
-  console.log(this.state.user);
-  console.log(this.state.user_id);
 }
 
 findMusician = () =>{
-  console.log("Musician ID: ")
-  console.log(this.state.user_id);
     const results = this.state.musicians.filter(musician =>
     musician.user === this.state.user_id)
     if(results.length !== 0){
-        this.state.existingMusician = true;
         this.setState({
             existingMusician: true
         });
-        console.log("Existing Musician APp");
-        console.log(results);
-        console.log(this.state.existingMusician)
+        this.forceUpdate();
     }
 }
 
@@ -101,8 +83,6 @@ getAllMusicians = async () => {
     this.setState({
       musicians: response.data
     });
-    console.log("getAllMusicians");
-    console.log(this.state.musicians);
   }
   catch(error){
     console.log(error);
@@ -110,6 +90,36 @@ getAllMusicians = async () => {
   this.findMusician();
 }
 
+getAllFans = async () => {
+  try{
+    const jwt = localStorage.getItem('token');
+    let response = await axios.get(`http://127.0.0.1:8000/api/fans/`, {headers: {Authorization: 'Bearer ' + jwt}});
+    this.setState({
+      fans: response.data
+    });
+  }
+  catch(error){
+    console.log(error);
+  }
+  this.findFan();
+}
+
+findFan = () =>{
+  // console.log("Musician ID: ")
+  // console.log(this.state.user_id);
+    const results = this.state.fans.filter(fan =>
+    fan.user === this.state.user_id)
+    if(results.length !== 0){
+        // this.state.existingFan = true;
+        this.setState({
+            existingFan: true
+        });
+        this.forceUpdate();
+        // console.log("Existing Musician APp");
+        // console.log(results);
+        // console.log(this.state.existingMusician)
+    }
+}
 
 getUserType = async (user_id) => {
   try{
@@ -144,6 +154,9 @@ getUserType = async (user_id) => {
                   findMusician={this.findMusician}
                   getAllMusicians={this.getAllMusicians}
                   existingMusician={this.state.existingMusician}
+                  getAllFans={this.getAllFans}
+                  findFan={this.findFan}
+                  existingFan={this.state.existingFan}
                   />);
               }
             }} />

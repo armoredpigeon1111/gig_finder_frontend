@@ -7,7 +7,6 @@ class Musician extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            // musicians: [],
             existingMusician: this.props.existingMusician,
          }
     }
@@ -15,17 +14,10 @@ class Musician extends Component {
     componentDidMount(){
         this.props.getAllMusicians();
         this.state.existingMusician = this.props.existingMusician;
-
-        // console.log("Existing Musician");
-        // console.log(this.state.existingMusician);
     }
 
-    componentDidUpdate(){
-     
+    componentDidUpdate(){    
       this.state.existingMusician = this.props.existingMusician;
-
-      // console.log("componentdidupdate Musician");
-      // console.log(this.state.existingMusician);
     }
 
     findMusician = () =>{
