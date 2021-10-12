@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import UpdateGig from '../UpdateGig/UpdateGig';
 
-class CreateGig extends Component {
+class Gig extends Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -14,6 +15,8 @@ class CreateGig extends Component {
             zipcode: "",
             likes: 0,
             dateTime: "",
+            gigID: 0,
+            showUpdate: false,
          }
     }
 
@@ -108,22 +111,35 @@ class CreateGig extends Component {
         }
 
         findGigs = () =>{
-            console.log("Musician ID: ")
-            console.log(this.state.musician_id);
+            // console.log("Musician ID: ")
+            // console.log(this.state.musician_id);
               const results = this.state.gigs.filter(gig =>
               gig.musician === this.state.musician_id)
                   this.setState({
                       gigs: results
                   });
-              console.log("GigList")             ;
-              console.log(results);
+              // console.log("GigList")             ;
+              // console.log(results);
           }
 
           async deleteGig(gigID) {
             const jwt = localStorage.getItem('token');
             let response = await axios.delete(`http://127.0.0.1:8000/api/gigs/${gigID}/delete`, {headers: {Authorization: 'Bearer ' + jwt}});
             console.log(response);
-            window.location.reload();
+          }
+
+          updateGig = (gigId) => {
+            this.state.gigID = gigId;
+            this.state.showUpdate = true;
+            this.setState({
+              gigID: gigId
+            })
+            console.log(this.state.gigID);
+          }
+
+          closeUpdate = () =>{
+            this.state.showUpdate = false;
+            this.forceUpdate();
           }
       
 
@@ -155,6 +171,7 @@ class CreateGig extends Component {
                         <th>State</th>
                         <th>Zipcode</th>
                         <th>Date and Time</th>
+                        <th>Likes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -166,15 +183,23 @@ class CreateGig extends Component {
                                 <td>{gig.state}</td>
                                 <td>{gig.zipcode}</td>
                                 <td>{gig.dateTime}</td>
+                                <td>{gig.likes}</td>
                                 <td>  <button className="btn" onClick={() => this.deleteGig(gig.id)}>Delete</button></td>
+                                <td>  <button className="btn" onClick={() => this.updateGig(gig.id)}>Update</button></td>
                             </tr>
                         );
                     })}
                 </tbody>
             </table>
+
+            {this.state.showUpdate?
+            <UpdateGig gigs={this.state.gigs} gigID={this.state.gigID} closeUpdate={this.closeUpdate}/>:
+            null
+            }
+            
             </div>
          );
     }
 }
  
-export default CreateGig;
+export default Gig;
