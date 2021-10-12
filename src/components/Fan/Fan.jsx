@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FanRegister from '../FanRegister/FanRegister';
+import FanHome from '../FanHome/FanHome';
 
 class Fan extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class Fan extends Component {
         return ( 
             <div>
                 {this.state.existingFan ?
-                <h1>existing</h1>
+                <FanHome user_id={this.props.user_id} />
                 :
                 <FanRegister user_id={this.props.user_id} />
                 }
