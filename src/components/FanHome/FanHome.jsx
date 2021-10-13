@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReviewGig from '../ReviewGig/ReviewGig';
+import { Modal } from 'react-responsive-modal';
+import 'react-responsive-modal/styles.css'
 
 class FanHome extends Component {
     constructor(props) {
@@ -13,6 +15,7 @@ class FanHome extends Component {
             genre3: "",
             gigsList: [],
             reviewGigID: 0,
+            showReview:false,
          }
     }
 
@@ -98,13 +101,10 @@ class FanHome extends Component {
       } 
 
       RSVPGig = async (gig_id) => {
-        console.log(this.state.fan_id);
-        console.log(gig_id);
         const gig ={
           gig: gig_id,
           fan: this.state.fan_id
         }
-        console.log(gig);
         try{
           const jwt = localStorage.getItem('token');
           let response = await axios.post(`http://127.0.0.1:8000/api/rsvps/`, gig, {headers: {Authorization: 'Bearer ' + jwt}});
@@ -118,6 +118,20 @@ class FanHome extends Component {
       reviewGig = (gig_id) =>{
         this.state.reviewGigID = gig_id;
       }
+
+      //modal
+      onClickButton = e =>{
+        this.state.showReview = true;
+        // this.setState({openModal: true})
+        this.forceUpdate();
+
+      }
+
+      closeReview = () =>{
+        this.state.showReview = false;
+        this.forceUpdate();
+      }
+
 
     render() { 
         return ( 
@@ -148,13 +162,20 @@ class FanHome extends Component {
                                 <td>{gig.likes}</td>
                                 <td><button className="btn" onClick={() => this.likeGig(gig.id)}>Like</button></td>
                                 <td><button className="btn" onClick={() => this.RSVPGig(gig.id)}>RSVP</button></td>
-                                <td><button className="btn" onClick={() => this.reviewGig(gig.id)}>Review</button></td>
+                                <td><button className="btn" onClick={() => {this.reviewGig(gig.id); this.onClickButton();}}>Review</button></td>
                             </tr>
                         );
                     })}
                 </tbody>
             </table>
-            <ReviewGig gig_id={this.state.reviewGigID}/>
+            
+            {this.state.showReview?
+            <ReviewGig gig_id={this.state.reviewGigID} closeReview={this.closeReview}/>
+            :
+            null
+            }
+              
+            
             </div>
          );
     }
