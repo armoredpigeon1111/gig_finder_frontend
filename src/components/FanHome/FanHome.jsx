@@ -4,6 +4,7 @@ import ReviewGig from '../ReviewGig/ReviewGig';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css'
 import FanDetailGig from '../FanDetailGig/FanDetailGig';
+import FanRSVPMap from '../FanRSVPMap/FanRSVPMap';
 
 class FanHome extends Component {
     constructor(props) {
@@ -22,12 +23,14 @@ class FanHome extends Component {
             allReviews: [],
             reviews: [],
             allRSVPs: [],
-            gigRSVPs: [],
+            fanRSVPs: [],
+            fanGigs: [],
          }
     }
 
     componentDidMount(){
         this.getAllFans();
+        this.getAllRSVPs();
     }
 
     getAllFans = async () => {
@@ -184,13 +187,48 @@ class FanHome extends Component {
           console.log(this.state.reviews);
         } 
 
+        getAllRSVPs = async () => {
+          try{
+              const jwt = localStorage.getItem('token');
+              let response = await axios.get(`http://127.0.0.1:8000/api/rsvps/`, {headers: {Authorization: 'Bearer ' + jwt}});
+              this.setState({
+                allRSVPs: response.data
+              });
+            }
+            catch(error){
+              console.log(error);
+            }
+            this.findRSVPs();
+          }
+
+          findRSVPs = () =>{
+            console.log("findRSVPs");
+            console.log(this.state.fan_id);
+            const results = this.state.allRSVPs.filter(rsvp =>
+            rsvp.fan === this.state.fan_id)
+                this.setState({
+                    fanRSVPs: results
+                });
+            this.forceUpdate();
+            console.log(this.state.fanRSVPs);
+            this.findFanGigs();
+          }
+
+          findFanGigs = () =>{
+            this.state.fanRSVPs.forEach(element =>
+                this.state.fanGigs.push(element.gig)
+              );
+              console.log("findFanGigs");
+              console.log(this.state.fanGigs);
+          }
+
 
     render() { 
         return ( 
             <div>
                 
               <h1>Suggested Gigs</h1>
-              <button onClick={() => this.getGenres()}>Reload</button>
+              {/* <button onClick={() => this.getGenres()}>Reload</button> */}
               <table>
                 <thead>
                     <tr>
@@ -234,6 +272,7 @@ class FanHome extends Component {
             null
             } 
             
+            <FanRSVPMap />
             </div>
          );
     }
