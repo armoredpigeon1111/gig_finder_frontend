@@ -15,6 +15,7 @@ class Gig extends Component {
             zipcode: "",
             likes: 0,
             dateTime: "",
+            genre: "",
             gigID: 0,
             showUpdate: false,
          }
@@ -49,7 +50,8 @@ class Gig extends Component {
             zipcode: this.state.zipcode,
             likes: this.state.likes,
             dateTime: this.state.dateTime,
-            musician: this.state.musician_id
+            musician: this.state.musician_id,
+            genre: this.state.genre
         }
 
         try{
@@ -156,6 +158,8 @@ class Gig extends Component {
                 <input type="text" name="state" onChange={this.handleChange} value={this.state.state} /><br />
                 <label>zipcode</label>
                 <input type="text" name="zipcode" onChange={this.handleChange} value={this.state.zipcode} /><br />
+                <label>Genre</label>
+                <input type="text" name="genre" onChange={this.handleChange} value={this.state.genre} /><br />
                 <label>Date</label>
                 <input type="datetime-local" name="dateTime" onChange={this.handleChange} value={this.state.dateTime} /><br />
                 <button type="submit">Submit</button>

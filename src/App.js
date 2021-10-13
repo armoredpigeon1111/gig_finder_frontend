@@ -105,19 +105,17 @@ getAllFans = async () => {
 }
 
 findFan = () =>{
-  // console.log("Musician ID: ")
-  // console.log(this.state.user_id);
     const results = this.state.fans.filter(fan =>
     fan.user === this.state.user_id)
+    console.log("Find Fan App");
+    console.log(results);
+    console.log(results.length);
     if(results.length !== 0){
-        // this.state.existingFan = true;
+        this.state.existingFan = true;
         this.setState({
             existingFan: true
         });
         this.forceUpdate();
-        // console.log("Existing Musician APp");
-        // console.log(results);
-        // console.log(this.state.existingMusician)
     }
 }
 
