@@ -137,9 +137,9 @@ class FanHome extends Component {
         return ( 
             <div>
                 
-                <h1>Suggested Gigs</h1>
-                <button onClick={() => this.getGenres()}>Reload</button>
-                <table>
+              <h1>Suggested Gigs</h1>
+              <button onClick={() => this.getGenres()}>Reload</button>
+              <table>
                 <thead>
                     <tr>
                         <th>Street</th>

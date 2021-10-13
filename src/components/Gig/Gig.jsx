@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import UpdateGig from '../UpdateGig/UpdateGig';
+import DetailGig from '../DetailGig/DetailGig';
 
 class Gig extends Component {
     constructor(props) {
@@ -18,6 +19,12 @@ class Gig extends Component {
             genre: "",
             gigID: 0,
             showUpdate: false,
+            showDetail: false,
+            gig: [],
+            allReviews: [],
+            reviews: [],
+            allRSVPs: [],
+            gigRSVPs: [],
          }
     }
 
@@ -56,11 +63,7 @@ class Gig extends Component {
 
         try{
           const jwt = localStorage.getItem('token');
-        //   console.log(jwt);
-        //   console.log(this.state.genre);
           let response = await axios.post(`http://127.0.0.1:8000/api/gigs/`, profileInfo, {headers: {Authorization: 'Bearer ' + jwt}} );
-
-        //   console.log(response);
         }
         catch(error){
           console.log(error);
@@ -69,8 +72,6 @@ class Gig extends Component {
       }
 
     findMusician = () =>{
-        // console.log("User ID: ")
-        // console.log(this.props.user_id);
           const results = this.state.musicians.filter(musician =>
           musician.user === this.props.user_id)
           if(results.length !== 0){
@@ -103,8 +104,6 @@ class Gig extends Component {
             this.setState({
               gigs: response.data
             });
-            console.log("getAllGigs");
-            console.log(this.state.gigs);
           }
           catch(error){
             console.log(error);
@@ -113,15 +112,11 @@ class Gig extends Component {
         }
 
         findGigs = () =>{
-            // console.log("Musician ID: ")
-            // console.log(this.state.musician_id);
               const results = this.state.gigs.filter(gig =>
               gig.musician === this.state.musician_id)
                   this.setState({
                       gigs: results
                   });
-              // console.log("GigList")             ;
-              // console.log(results);
           }
 
           async deleteGig(gigID) {
@@ -144,6 +139,82 @@ class Gig extends Component {
             this.forceUpdate();
           }
       
+          showDetail = (gigId) => {
+            this.state.gigID = gigId;
+            this.state.showDetail = true;
+            this.setState({
+              gigID: gigId
+            })
+            this.findGig(gigId);
+            this.getAllReviews(gigId);
+            this.getAllRSVPs(gigId);
+          }
+
+          closeDetail = () =>{
+            this.state.showUpdate = false;
+            this.forceUpdate();
+          }
+
+          findGig = (gigId) =>{
+            const results = this.state.gigs.filter(gig =>
+            gig.id === gigId)
+                this.setState({
+                    gig: results
+                });
+                this.forceUpdate();
+          }
+
+          getAllReviews = async (gigId) => {
+            try{
+                const jwt = localStorage.getItem('token');
+                let response = await axios.get(`http://127.0.0.1:8000/api/reviews/`, {headers: {Authorization: 'Bearer ' + jwt}});
+                this.setState({
+                  allReviews: response.data
+                });
+              }
+              catch(error){
+                console.log(error);
+              }
+              this.findReviews(gigId);
+            }
+
+            findReviews = (gigId) =>{
+              console.log("findReviews");
+              console.log(gigId);
+              const results = this.state.allReviews.filter(review =>
+              review.gig === gigId)
+                  this.setState({
+                      reviews: results
+                  });
+              this.forceUpdate();
+              console.log(this.state.reviews);
+            }        
+            
+            getAllRSVPs = async (gigId) => {
+              try{
+                  const jwt = localStorage.getItem('token');
+                  let response = await axios.get(`http://127.0.0.1:8000/api/rsvps/`, {headers: {Authorization: 'Bearer ' + jwt}});
+                  this.setState({
+                    allRSVPs: response.data
+                  });
+                }
+                catch(error){
+                  console.log(error);
+                }
+                this.findRSVPs(gigId);
+              }
+
+              findRSVPs = (gigId) =>{
+                console.log("findReviews");
+                console.log(gigId);
+                const results = this.state.allRSVPs.filter(rsvp =>
+                rsvp.gig === gigId)
+                    this.setState({
+                        gigRSVPs: results.length
+                    });
+                this.forceUpdate();
+                console.log(this.state.gigRSVPs);
+              } 
 
     render() { 
         return ( 
@@ -190,6 +261,7 @@ class Gig extends Component {
                                 <td>{gig.likes}</td>
                                 <td>  <button className="btn" onClick={() => this.deleteGig(gig.id)}>Delete</button></td>
                                 <td>  <button className="btn" onClick={() => this.updateGig(gig.id)}>Update</button></td>
+                                <td>  <button className="btn" onClick={() => this.showDetail(gig.id)}>Details</button></td>
                             </tr>
                         );
                     })}
@@ -201,6 +273,10 @@ class Gig extends Component {
             null
             }
             
+            {this.state.showDetail?
+            <DetailGig gigRSVPs={this.state.gigRSVPs} reviews={this.state.reviews} gig={this.state.gig} gigs={this.state.gigs} gigID={this.state.gigID} closeUpdate={this.closeDetail}/>:
+            null
+            }
             </div>
          );
     }
