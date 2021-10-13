@@ -25,12 +25,19 @@ class FanHome extends Component {
             allRSVPs: [],
             fanRSVPs: [],
             fanGigs: [],
+            RSVPGigs: [],
+            street: "122 State St",
+            city: "West Columbia",
+            state: "SC",
+            lat: 0,
+            long: 0,
          }
     }
 
     componentDidMount(){
         this.getAllFans();
         this.getAllRSVPs();
+        this.getGeocode();
     }
 
     getAllFans = async () => {
@@ -211,16 +218,48 @@ class FanHome extends Component {
                 });
             this.forceUpdate();
             console.log(this.state.fanRSVPs);
-            this.findFanGigs();
+            this.findFanGigIDs();
           }
 
-          findFanGigs = () =>{
+          findFanGigIDs = () =>{
             this.state.fanRSVPs.forEach(element =>
                 this.state.fanGigs.push(element.gig)
               );
-              console.log("findFanGigs");
-              console.log(this.state.fanGigs);
+            this.listRSVPGigs();
           }
+
+          listRSVPGigs = () => {
+            // debugger;
+            for(let i = 0; i < this.state.fanGigs.length; i++){
+              const results = this.props.gigs.filter(gig => gig.id === this.state.fanGigs[i]);
+              this.state.RSVPGigs.push(results);
+            }       
+            console.log("RSVPGIG");
+            console.log(this.state.RSVPGigs);
+          }
+
+          getGeocode = async () => {
+            try{
+              const jwt = localStorage.getItem('token');
+              let response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.street}, ${this.state.city},${this.state.state}&key=AIzaSyBB3PQoqrOk8hba3wWHMuQyh-xG_gvXDY4`);
+            
+              console.log("geocode");
+              console.log(response.data);
+              console.log(response.data.results[0].geometry.location.lat);
+              console.log(response.data.results[0].geometry.location.lng);
+              this.state.lat = response.data.results[0].geometry.location.lat
+              this.state.long = response.data.results[0].geometry.location.lng
+              this.setState({
+                  lat:response.data.results[0].geometry.location.lat,
+                  long:response.data.results[0].geometry.location.lng
+              })
+              this.forceUpdate();
+            }
+            catch(error){
+              console.log(error);
+            }
+    
+          } 
 
 
     render() { 
@@ -272,7 +311,7 @@ class FanHome extends Component {
             null
             } 
             
-            <FanRSVPMap />
+            <FanRSVPMap lat={this.state.lat} long={this.state.long}/>
             </div>
          );
     }

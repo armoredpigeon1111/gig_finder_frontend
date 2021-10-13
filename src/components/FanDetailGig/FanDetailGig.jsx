@@ -29,6 +29,7 @@ class FanDetailGig extends Component {
                     </table>
                     <h2>Reviews</h2>
                     <table>
+                    <tbody>
                     {this.props.reviews.map((review)=>{
                         return(
                             <tr key={review.id}>
@@ -36,6 +37,7 @@ class FanDetailGig extends Component {
                             </tr>
                         );
                     })}
+                    </tbody>
                 </table>
 
             </div>
