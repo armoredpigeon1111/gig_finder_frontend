@@ -3,6 +3,7 @@ import axios from 'axios';
 import ReviewGig from '../ReviewGig/ReviewGig';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css'
+import FanDetailGig from '../FanDetailGig/FanDetailGig';
 
 class FanHome extends Component {
     constructor(props) {
@@ -16,6 +17,12 @@ class FanHome extends Component {
             gigsList: [],
             reviewGigID: 0,
             showReview:false,
+            showDetail: false,
+            gig: [],
+            allReviews: [],
+            reviews: [],
+            allRSVPs: [],
+            gigRSVPs: [],
          }
     }
 
@@ -73,11 +80,6 @@ class FanHome extends Component {
       }
 
       findGigs = () =>{
-          console.log("find gigs");
-          console.log(this.props.gigs);
-          console.log(this.state.genre1);
-          console.log(this.state.genre2);
-          console.log(this.state.genre3);
           const results = this.props.gigs.filter(gig =>
           gig.genre === this.state.genre1.toLowerCase() ||
           gig.genre === this.state.genre2.toLowerCase() ||
@@ -85,8 +87,7 @@ class FanHome extends Component {
               this.setState({
                   gigsList: results
               });
-          console.log("GigList")             ;
-          console.log(results);
+              this.forceUpdate();
       }
 
       likeGig = async (gig_id) => {
@@ -97,7 +98,8 @@ class FanHome extends Component {
         catch(error){
           console.log(error);
         }
-        this.findGigs();
+        this.getGenres();
+        alert("Like Added");
       } 
 
       RSVPGig = async (gig_id) => {
@@ -132,6 +134,56 @@ class FanHome extends Component {
         this.forceUpdate();
       }
 
+      showDetail = (gigId) => {
+        this.state.gigID = gigId;
+        this.state.showDetail = true;
+        this.setState({
+          gigID: gigId
+        })
+        this.findGig(gigId);
+        this.getAllReviews(gigId);
+      }
+
+      closeDetail = () =>{
+        this.state.showUpdate = false;
+        this.forceUpdate();
+      }
+
+      findGig = (gigId) =>{
+        const results = this.props.gigs.filter(gig =>
+        gig.id === gigId)
+            this.setState({
+                gig: results
+            });
+            this.forceUpdate();
+      }
+
+      getAllReviews = async (gigId) => {
+        try{
+            const jwt = localStorage.getItem('token');
+            let response = await axios.get(`http://127.0.0.1:8000/api/reviews/`, {headers: {Authorization: 'Bearer ' + jwt}});
+            this.setState({
+              allReviews: response.data
+            });
+          }
+          catch(error){
+            console.log(error);
+          }
+          this.findReviews(gigId);
+        }
+
+        findReviews = (gigId) =>{
+          console.log("findReviews");
+          console.log(gigId);
+          const results = this.state.allReviews.filter(review =>
+          review.gig === gigId)
+              this.setState({
+                  reviews: results
+              });
+          this.forceUpdate();
+          console.log(this.state.reviews);
+        } 
+
 
     render() { 
         return ( 
@@ -163,6 +215,7 @@ class FanHome extends Component {
                                 <td><button className="btn" onClick={() => this.likeGig(gig.id)}>Like</button></td>
                                 <td><button className="btn" onClick={() => this.RSVPGig(gig.id)}>RSVP</button></td>
                                 <td><button className="btn" onClick={() => {this.reviewGig(gig.id); this.onClickButton();}}>Review</button></td>
+                                <td>  <button className="btn" onClick={() => this.showDetail(gig.id)}>Details</button></td>
                             </tr>
                         );
                     })}
@@ -174,7 +227,12 @@ class FanHome extends Component {
             :
             null
             }
-              
+            
+            {this.state.showDetail?
+            <FanDetailGig reviews={this.state.reviews} gig={this.state.gig} gigs={this.state.gigs} gigID={this.state.gigID} closeUpdate={this.closeDetail}/>
+            :
+            null
+            } 
             
             </div>
          );
