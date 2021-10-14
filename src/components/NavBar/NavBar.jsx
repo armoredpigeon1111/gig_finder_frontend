@@ -14,8 +14,8 @@ class NavBar extends Component {
 
         if(this.props.user){
             return ( 
-                <div>
-                    <button onClick={() => this.logoutUser()}>Logout</button>
+                <div className="d-flex container justify-content-end" >
+                    <button className="btn btn-primary" onClick={() => this.logoutUser()}>Logout</button>
                 </div>
              );
         }
