@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./DetailGig.css"
 
 class DetailGig extends Component {
     constructor(props) {
@@ -17,10 +18,10 @@ class DetailGig extends Component {
     render() { 
         return ( 
 
-            <div>
+            <div className="detailContainer">
             <h1>Gig Details</h1>
 
-            <table>
+            <table >
 
                 <tbody>
                     {this.props.gig.map((gig) => {
@@ -30,15 +31,15 @@ class DetailGig extends Component {
                                 <td>{gig.city}</td>
                                 <td>{gig.state}</td>
                                 <td>{gig.zipcode}</td>
-                                <td>{gig.dateTime}</td>
-                                <td>{gig.likes}</td>
+                                {/* <td>{gig.dateTime}</td>
+                                <td>{gig.likes}</td> */}
                             </tr>
                         );
                     })}
                 </tbody>
             </table>
             <h2>Reviews</h2>
-            <table>
+            <table >
                 {this.props.reviews.map((review)=>{
                     return(
                         <tr key={review.id}>
@@ -48,7 +49,7 @@ class DetailGig extends Component {
                 })}
             </table>
            
-            <p>RSVPs:{this.props.gigRSVPs} </p>
+            <p><strong>RSVPs:</strong>{this.props.gigRSVPs} </p>
             </div>
            
             
