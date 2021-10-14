@@ -9,6 +9,7 @@ import { Redirect, Route, Switch} from "react-router";
 import {BrowserRouter} from "react-router-dom";
 import axios from 'axios';
 import jwtDecode from "jwt-decode";
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends Component {
   constructor(props) {

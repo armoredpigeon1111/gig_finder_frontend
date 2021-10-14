@@ -11,7 +11,7 @@ class FanHome extends Component {
         super(props);
         this.state = { 
             fans: [],
-            fan_id: 0, 
+            fan_id: this.props.fan_id, 
             genre1: "",
             genre2: "",
             genre3: "",
@@ -29,16 +29,18 @@ class FanHome extends Component {
             street: "122 State St",
             city: "West Columbia",
             state: "SC",
-            lat: 0,
-            long: 0,
+            lat: 33.99,
+            long: -81.05,
          }
     }
 
     componentDidMount(){
         this.getAllFans();
         this.getAllRSVPs();
-        this.getGeocode();
+        // this.getGeocode();
     }
+
+
 
     getAllFans = async () => {
         try{
@@ -183,8 +185,8 @@ class FanHome extends Component {
         }
 
         findReviews = (gigId) =>{
-          console.log("findReviews");
-          console.log(gigId);
+          // console.log("findReviews");
+          // console.log(gigId);
           const results = this.state.allReviews.filter(review =>
           review.gig === gigId)
               this.setState({
@@ -201,11 +203,12 @@ class FanHome extends Component {
               this.setState({
                 allRSVPs: response.data
               });
+              this.findRSVPs();
             }
             catch(error){
               console.log(error);
             }
-            this.findRSVPs();
+            
           }
 
           findRSVPs = () =>{
@@ -225,6 +228,8 @@ class FanHome extends Component {
             this.state.fanRSVPs.forEach(element =>
                 this.state.fanGigs.push(element.gig)
               );
+              console.log("findFanGigIDs");
+              console.log(this.state.fanGigs);
             this.listRSVPGigs();
           }
 
@@ -236,9 +241,19 @@ class FanHome extends Component {
             }       
             console.log("RSVPGIG");
             console.log(this.state.RSVPGigs);
+            this.tryGeocode();
+          }
+
+
+          tryGeocode = () =>{
+            for(let i = 0; i<this.state.RSVPGigs.length; i++){
+              console.log("tryGeocode");
+              console.log(this.state.RSVPGigs[0]);
+            }
           }
 
           getGeocode = async () => {
+
             try{
               const jwt = localStorage.getItem('token');
               let response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.street}, ${this.state.city},${this.state.state}&key=AIzaSyBB3PQoqrOk8hba3wWHMuQyh-xG_gvXDY4`);
@@ -258,7 +273,7 @@ class FanHome extends Component {
             catch(error){
               console.log(error);
             }
-    
+      
           } 
 
 
@@ -267,7 +282,6 @@ class FanHome extends Component {
             <div>
                 
               <h1>Suggested Gigs</h1>
-              {/* <button onClick={() => this.getGenres()}>Reload</button> */}
               <table>
                 <thead>
                     <tr>
@@ -292,7 +306,7 @@ class FanHome extends Component {
                                 <td><button className="btn" onClick={() => this.likeGig(gig.id)}>Like</button></td>
                                 <td><button className="btn" onClick={() => this.RSVPGig(gig.id)}>RSVP</button></td>
                                 <td><button className="btn" onClick={() => {this.reviewGig(gig.id); this.onClickButton();}}>Review</button></td>
-                                <td>  <button className="btn" onClick={() => this.showDetail(gig.id)}>Details</button></td>
+                                <td><button className="btn" onClick={() => this.showDetail(gig.id)}>Details</button></td>
                             </tr>
                         );
                     })}

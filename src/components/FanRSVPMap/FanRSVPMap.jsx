@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import axios from 'axios';
 
 const mapStyles = {
@@ -15,14 +15,33 @@ export class FanRSVPMap extends Component {
             // street: "122 State St",
             // city: "West Columbia",
             // state: "SC",
-            // lat: 33,
-            // long: -81,
+             lat: this.props.lat,
+             long: this.props.long,
+             showInfoWindow: false,
+             activeMarker: {},
+             selectedPlace: {},
          }
     }
 
     componentDidMount(){
         // this.getGeocode();
     }
+
+    onMarkerClick = (props, marker, e) =>
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+
+    onClose = props => {
+      if (this.state.showingInfoWindow) {
+        this.setState({
+          showingInfoWindow: false,
+          activeMarker: null
+        });
+      }
+    };
 
     // getGeocode = async () => {
     //     try{
@@ -49,6 +68,7 @@ export class FanRSVPMap extends Component {
 
   render() {
     return (
+      <div>
       <Map
         google={this.props.google}
         zoom={14}
@@ -59,7 +79,24 @@ export class FanRSVPMap extends Component {
             lng: this.props.long
           }
         }
-      />
+      >
+      
+      <Marker
+          onClick={this.onMarkerClick}
+        />
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}
+          onClose={this.onClose}
+        >
+          <div>
+            <h4>{this.state.selectedPlace.name}</h4>
+          </div>
+        </InfoWindow>  
+
+      </Map>
+
+      </div>
     );
   }
 }

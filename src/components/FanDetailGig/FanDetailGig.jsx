@@ -10,26 +10,22 @@ class FanDetailGig extends Component {
             <div>
                 <h1>Gig Details</h1>
 
-                <table>
+                {/* <table>
 
-                    <tbody>
+                    <tbody> */}
                         {this.props.gig.map((gig) => {
                             return(
-                                <tr key={gig.id}>
-                                    <td>{gig.street}</td>
-                                    <td>{gig.city}</td>
-                                    <td>{gig.state}</td>
-                                    <td>{gig.zipcode}</td>
-                                    <td>{gig.dateTime}</td>
-                                    <td>{gig.likes}</td>
-                                </tr>
+                                <div>
+                                    <p>{gig.street} {gig.city}, {gig.state} {gig.zipcode}</p>
+                                    <p>Likes: {gig.likes}</p>
+                                </div>
                             );
                         })}
-                    </tbody>
-                    </table>
+                    {/* </tbody>
+                    </table> */}
                     <h2>Reviews</h2>
-                    <table>
-                    <tbody>
+                     <table>
+                     <tbody>
                     {this.props.reviews.map((review)=>{
                         return(
                             <tr key={review.id}>

@@ -39,11 +39,14 @@ class Fan extends Component {
         this.props.findFan();
     }
 
+
+
+
     render() { 
         return ( 
             <div>
                 <FanRegister user_id={this.props.user_id} findFan={this.findFan}/>
-                <FanHome user_id={this.props.user_id} gigs={this.state.gigs}/>
+                <FanHome  user_id={this.props.user_id} gigs={this.state.gigs}/>
 
                 {/* {this.state.existingFan ?
                 <FanHome user_id={this.props.user_id} gigs={this.state.gigs}/>
