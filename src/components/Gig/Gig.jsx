@@ -220,25 +220,39 @@ class Gig extends Component {
         return ( 
             <div>
             <h1>Create Gig</h1>
-            <form onSubmit={(event) => this.handleSubmit(event)}>
-                <label>Street</label>
-                <input type="text" name="street" onChange={this.handleChange} value={this.state.street} /><br />
-                <label>City</label>
-                <input type="text" name="city" onChange={this.handleChange} value={this.state.city} /><br />
-                <label>State</label>
-                <input type="text" name="state" onChange={this.handleChange} value={this.state.state} /><br />
-                <label>zipcode</label>
-                <input type="text" name="zipcode" onChange={this.handleChange} value={this.state.zipcode} /><br />
-                <label>Genre</label>
-                <input type="text" name="genre" onChange={this.handleChange} value={this.state.genre} /><br />
-                <label>Date</label>
-                <input type="datetime-local" name="dateTime" onChange={this.handleChange} value={this.state.dateTime} /><br />
-                <button type="submit">Submit</button>
-            </form>
-
-            <h1>List Gigs</h1>
-            <button onClick={() => this.getAllGigs()}>Reload</button>
-            <table>
+            <div className="d-flex container justify-content-start">
+            
+              <form className="form-group" onSubmit={(event) => this.handleSubmit(event)}>
+                  <div className = "row mb-1">
+                    <label>Street</label>
+                    <input type="text" name="street" onChange={this.handleChange} value={this.state.street} /><br />
+                  </div>
+                  <div className = "row mb-1">
+                    <label>City</label>
+                    <input type="text" name="city" onChange={this.handleChange} value={this.state.city} /><br />
+                  </div>
+                  <div className = "row mb-1">
+                    <label>State</label>
+                    <input type="text" name="state" onChange={this.handleChange} value={this.state.state} /><br />
+                  </div>
+                  <div className = "row mb-1">
+                    <label>zipcode</label>
+                    <input type="text" name="zipcode" onChange={this.handleChange} value={this.state.zipcode} /><br />
+                  </div>
+                  <div className = "row mb-1">
+                    <label>Genre</label>
+                    <input type="text" name="genre" onChange={this.handleChange} value={this.state.genre} /><br />
+                  </div>
+                  <div className = "row mb-1">
+                    <label>Date</label>
+                    <input type="datetime-local" name="dateTime" onChange={this.handleChange} value={this.state.dateTime} /><br />
+                  </div>
+                  <button className="btn btn-primary" type="submit">Submit</button>
+              </form>
+            </div>
+            <h1>Gigs</h1>
+            <button className="btn btn-danger" onClick={() => this.getAllGigs()}>Reload</button>
+            <table className="table table-striped table-dark">
                 <thead>
                     <tr>
                         <th>Street</th>
@@ -247,6 +261,9 @@ class Gig extends Component {
                         <th>Zipcode</th>
                         <th>Date and Time</th>
                         <th>Likes</th>
+                        <th>Delete</th>
+                        <th>Update</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -259,9 +276,9 @@ class Gig extends Component {
                                 <td>{gig.zipcode}</td>
                                 <td>{gig.dateTime}</td>
                                 <td>{gig.likes}</td>
-                                <td>  <button className="btn" onClick={() => this.deleteGig(gig.id)}>Delete</button></td>
-                                <td>  <button className="btn" onClick={() => this.updateGig(gig.id)}>Update</button></td>
-                                <td>  <button className="btn" onClick={() => this.showDetail(gig.id)}>Details</button></td>
+                                <td>  <button className="btn btn-primary" onClick={() => this.deleteGig(gig.id)}>Delete</button></td>
+                                <td>  <button className="btn btn-primary" onClick={() => this.updateGig(gig.id)}>Update</button></td>
+                                <td>  <button className="btn btn-primary" onClick={() => this.showDetail(gig.id)}>Details</button></td>
                             </tr>
                         );
                     })}

@@ -75,19 +75,31 @@ class UpdateGig extends Component {
         return ( 
             <div>
             <h1>Update Gig</h1>
+            <div className="d-flex container justify-content-start align-items-center">
             <form onSubmit={(event) => this.handleSubmit(event)}>
-                <label>Street</label>
-                <input type="text" name="street" onChange={this.handleChange} value={this.state.street} /><br />
-                <label>City</label>
-                <input type="text" name="city" onChange={this.handleChange} value={this.state.city} /><br />
-                <label>State</label>
-                <input type="text" name="state" onChange={this.handleChange} value={this.state.state} /><br />
-                <label>zipcode</label>
-                <input type="text" name="zipcode" onChange={this.handleChange} value={this.state.zipcode} /><br />
-                <label>Date</label>
-                <input type="datetime-local" name="dateTime" onChange={this.handleChange} value={this.state.dateTime} /><br />
-                <button type="submit">Submit</button>
+                <div className = "row mb-3">
+                    <label>Street</label>
+                    <input type="text" name="street" onChange={this.handleChange} value={this.state.street} /><br />
+                </div>
+                <div className = "row mb-3">
+                    <label>City</label>
+                    <input type="text" name="city" onChange={this.handleChange} value={this.state.city} /><br />
+                </div>
+                <div className = "row mb-3">    
+                    <label>State</label>
+                    <input type="text" name="state" onChange={this.handleChange} value={this.state.state} /><br />
+                </div>
+                <div className = "row mb-3">    
+                    <label>zipcode</label>
+                    <input type="text" name="zipcode" onChange={this.handleChange} value={this.state.zipcode} /><br />
+                </div>
+                <div className = "row mb-3">    
+                    <label>Date</label>
+                    <input type="datetime-local" name="dateTime" onChange={this.handleChange} value={this.state.dateTime} /><br />
+                </div>    
+                <button className="btn btn-primary" type="submit">Submit</button>
             </form>
+            </div>
             </div>
          );
     }
