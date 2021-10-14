@@ -52,18 +52,29 @@ class Login extends Component {
                 <Register registerToggle = {this.registerToggle}/>
                 
                 :
-                <div>
-                <form onSubmit={(event) => this.handleSubmit(event)}>
-                    <label>Username:</label>
-                    <input type="text" name="username" onChange={this.handleChange} value={this.state.username}/><br />
-                    <label>Password:</label>
-                    <input type="password" name="password" onChange={this.handleChange} value={this.state.password}/><br />
-                    <button type="submit" >Login</button>
-                    
+                
+                <div className="d-flex container justify-content-center align-items-center">    
+                <form className="form-group" onSubmit={(event) => this.handleSubmit(event)}>
+                    <div className="row mb-3">
+                        <label>Username:</label>
+                        <div className="col-sm-10">
+                            <input type="text" name="username" onChange={this.handleChange} value={this.state.username}/><br />
+                        </div>
+                    </div>
+                    <div className="row mb-3">
+                        <label>Password:</label>
+                        <div className="col-sm-10">
+                            <input type="password" name="password" onChange={this.handleChange} value={this.state.password}/><br />
+                        </div>    
+                    </div>    
+                    <button className="btn btn-primary" type="submit" >Login</button>
+                    <button className="btn btn-secondary" onClick={() => this.registerToggle()}>Register</button>
                 </form>
-                <button onClick={() => this.registerToggle()}>Register</button>
+                
+                
                 </div>
                 }
+                
             </div>
 
          );
