@@ -44,17 +44,29 @@ class Register extends Component {
 
     render() { 
         return ( 
-            <div>
+            <div className="d-flex container justify-content-start align-items-center">
                 <form onSubmit={(event) => this.handleSubmit(event)}>
-                    <label>Username:</label>
-                    <input type="text" name="username" onChange={this.handleChange} value={this.state.username}/><br />
-                    <label>Password:</label>
-                    <input type="password" name="password" onChange={this.handleChange} value={this.state.password}/><br />
-                    <label>Email:</label>
-                    <input type="email" name="email" onChange={this.handleChange} value={this.state.email}/><br />
-                    <input type="checkbox" name="isMusician" checked={this.state.isMusician} onChange={this.handleChange} />
-                    <label>I'm a Musician</label><br />
-                    <button type="submit">Register</button>
+                <div className = "row mb-3">
+                        <label>Username:</label>
+                        <input type="text" name="username" onChange={this.handleChange} value={this.state.username}/><br />
+                </div>
+                <div className = "row mb-3">        
+                        <label>Password:</label>
+                        <input type="password" name="password" onChange={this.handleChange} value={this.state.password}/><br />
+                </div>
+                <div className = "row mb-3"> 
+                        <label>Email:</label>
+                        <input type="email" name="email" onChange={this.handleChange} value={this.state.email}/><br />
+                </div>
+                {/* <div className = "row mb-3"> */}     
+                        <input type="checkbox" name="isMusician" checked={this.state.isMusician} onChange={this.handleChange} />
+                        <label>I'm a Musician</label>
+                {/* </div> */}
+                <div className = "row mb-3">   
+                    <div className="col-sm-10 col-auto">     
+                        <button type="submit">Register</button>
+                    </div>
+                </div>
                 </form>
             </div>
          );

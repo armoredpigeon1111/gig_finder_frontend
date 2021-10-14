@@ -282,7 +282,7 @@ class FanHome extends Component {
             <div>
                 
               <h1>Suggested Gigs</h1>
-              <table>
+              <table class="table table-striped table-dark">
                 <thead>
                     <tr>
                         <th>Street</th>
@@ -291,6 +291,10 @@ class FanHome extends Component {
                         <th>Zipcode</th>
                         <th>Date and Time</th>
                         <th>Likes</th>
+                        <th>Like</th>
+                        <th>RSVP</th>
+                        <th>Review</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -303,10 +307,10 @@ class FanHome extends Component {
                                 <td>{gig.zipcode}</td>
                                 <td>{gig.dateTime}</td>
                                 <td>{gig.likes}</td>
-                                <td><button className="btn" onClick={() => this.likeGig(gig.id)}>Like</button></td>
-                                <td><button className="btn" onClick={() => this.RSVPGig(gig.id)}>RSVP</button></td>
-                                <td><button className="btn" onClick={() => {this.reviewGig(gig.id); this.onClickButton();}}>Review</button></td>
-                                <td><button className="btn" onClick={() => this.showDetail(gig.id)}>Details</button></td>
+                                <td><button className="btn btn-primary" onClick={() => this.likeGig(gig.id)}>Like</button></td>
+                                <td><button className="btn btn-primary" onClick={() => this.RSVPGig(gig.id)}>RSVP</button></td>
+                                <td><button className="btn btn-primary" onClick={() => {this.reviewGig(gig.id); this.onClickButton();}}>Review</button></td>
+                                <td><button className="btn btn-primary" onClick={() => this.showDetail(gig.id)}>Details</button></td>
                             </tr>
                         );
                     })}

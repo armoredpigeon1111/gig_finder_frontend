@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./FanDetailGig.css"
 
 class FanDetailGig extends Component {
     constructor(props) {
@@ -7,7 +8,7 @@ class FanDetailGig extends Component {
     }
     render() { 
         return ( 
-            <div>
+            <div className="detailContainer">
                 <h1>Gig Details</h1>
 
                 {/* <table>
@@ -17,7 +18,7 @@ class FanDetailGig extends Component {
                             return(
                                 <div>
                                     <p>{gig.street} {gig.city}, {gig.state} {gig.zipcode}</p>
-                                    <p>Likes: {gig.likes}</p>
+                                    <p><strong>Likes:</strong> {gig.likes}</p>
                                 </div>
                             );
                         })}

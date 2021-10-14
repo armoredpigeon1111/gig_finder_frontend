@@ -46,13 +46,23 @@ class MusicianRegister extends Component {
 
     render() { 
         return ( 
-            <form onSubmit={(event) => this.handleSubmit(event)}>
-                <label>Band Name:</label>
-                <input type="text" name="bandName" onChange={this.handleChange} value={this.state.bandName} /><br />
-                <label>Genre</label>
-                <input type="text" name="genre" onChange={this.handleChange} value={this.state.genre} /><br />
-                <button type="submit">Submit</button>
-            </form>
+            <div className="d-flex container justify-content-start align-items-center">
+                <form onSubmit={(event) => this.handleSubmit(event)}>
+                <div className = "row mb-3">
+                        <label>Band Name:</label>
+                        <input type="text" name="bandName" onChange={this.handleChange} value={this.state.bandName} /><br />
+                </div>
+                <div className = "row mb-3">        
+                        <label>Genre</label>
+                        <input type="text" name="genre" onChange={this.handleChange} value={this.state.genre} /><br />
+                </div>
+                <div className = "row mb-3"> 
+                    <div className="col-sm-10 col-auto">        
+                        <button className="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>        
+                </form>
+            </div>
          );
     }
 }
