@@ -51,16 +51,27 @@ class FanRegister extends Component {
 
             <div>
             <h1>Select your favorite genres</h1>
-            <form onSubmit={(event) => this.handleSubmit(event)}>
-                <label>Genre 1</label>
-                <input type="text" name="genre1" onChange={this.handleChange} value={this.state.genre1} /><br />
-                <label>Genre 2</label>
-                <input type="text" name="genre2" onChange={this.handleChange} value={this.state.genre2} /><br />
-                <label>Genre 3</label>
-                <input type="text" name="genre3" onChange={this.handleChange} value={this.state.genre3} /><br />
-                <button type="submit">Submit</button>
-            </form>
-
+            <div className="d-flex container justify-content-start align-items-center">
+                <form onSubmit={(event) => this.handleSubmit(event)}>
+                    <div className = "row mb-3">
+                        <label>Genre 1</label>
+                        <input type="text" name="genre1" onChange={this.handleChange} value={this.state.genre1} /><br />
+                    </div>
+                    <div className = "row mb-3">    
+                        <label>Genre 2</label>
+                        <input type="text" name="genre2" onChange={this.handleChange} value={this.state.genre2} /><br />
+                    </div>
+                    <div className = "row mb-3">    
+                        <label>Genre 3</label>
+                        <input type="text" name="genre3" onChange={this.handleChange} value={this.state.genre3} /><br />
+                    </div>
+                    <div className = "row mb-3">
+                        <div className="col-sm-10 col-auto">    
+                        <button className="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </div>    
+                </form>
+            </div>
             </div>
          );
     }

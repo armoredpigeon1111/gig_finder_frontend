@@ -31,7 +31,6 @@ class Home extends Component {
     }
 
     render() { 
-
         if(this.props.isMusician){
             return(
                 <Musician user_id={this.props.user_id} 
