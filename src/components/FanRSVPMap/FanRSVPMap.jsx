@@ -84,6 +84,20 @@ export class FanRSVPMap extends Component {
       <Marker
           onClick={this.onMarkerClick}
         />
+
+        {this.props.geocodeData.map((coords)=>{
+          return(
+            
+            <Marker 
+              position={{
+                lat: coords[0],
+                lng: coords[1]
+
+              }}
+            />
+          );
+        })}
+
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}

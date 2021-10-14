@@ -31,6 +31,7 @@ class FanHome extends Component {
             state: "SC",
             lat: 33.99,
             long: -81.05,
+            geocodeData: [],
          }
     }
 
@@ -248,26 +249,25 @@ class FanHome extends Component {
           tryGeocode = () =>{
             for(let i = 0; i<this.state.RSVPGigs.length; i++){
               console.log("tryGeocode");
-              console.log(this.state.RSVPGigs[0]);
+              console.log(this.state.RSVPGigs[0][i].street);
+              console.log(this.state.RSVPGigs[0][i].city);
+              console.log(this.state.RSVPGigs[0][i].state);
+              this.getGeocode(this.state.RSVPGigs[0][i].street, this.state.RSVPGigs[0][i].city, this.state.RSVPGigs[0][i].state)
             }
           }
 
-          getGeocode = async () => {
+          getGeocode = async (street, city, state) => {
 
             try{
               const jwt = localStorage.getItem('token');
-              let response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.street}, ${this.state.city},${this.state.state}&key=AIzaSyBB3PQoqrOk8hba3wWHMuQyh-xG_gvXDY4`);
+              let response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${street}, ${city},${state}&key=AIzaSyBB3PQoqrOk8hba3wWHMuQyh-xG_gvXDY4`);
             
               console.log("geocode");
               console.log(response.data);
               console.log(response.data.results[0].geometry.location.lat);
               console.log(response.data.results[0].geometry.location.lng);
-              this.state.lat = response.data.results[0].geometry.location.lat
-              this.state.long = response.data.results[0].geometry.location.lng
-              this.setState({
-                  lat:response.data.results[0].geometry.location.lat,
-                  long:response.data.results[0].geometry.location.lng
-              })
+              this.state.geocodeData.push([response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng]);
+              
               this.forceUpdate();
             }
             catch(error){
@@ -329,7 +329,7 @@ class FanHome extends Component {
             null
             } 
             
-            <FanRSVPMap lat={this.state.lat} long={this.state.long}/>
+            <FanRSVPMap geocodeData={this.state.geocodeData} lat={this.state.lat} long={this.state.long}/>
             </div>
          );
     }
