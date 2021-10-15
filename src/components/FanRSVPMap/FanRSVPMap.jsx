@@ -81,9 +81,9 @@ export class FanRSVPMap extends Component {
         }
       >
       
-      <Marker
+      {/* <Marker
           onClick={this.onMarkerClick}
-        />
+        /> */}
 
         {this.props.geocodeData.map((coords)=>{
           return(

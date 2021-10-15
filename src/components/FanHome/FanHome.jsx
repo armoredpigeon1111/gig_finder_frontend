@@ -21,6 +21,7 @@ class FanHome extends Component {
             showReview:false,
             showDetail: false,
             gig: [],
+            gigs: [],
             allReviews: [],
             reviews: [],
             allRSVPs: [],
@@ -95,9 +96,9 @@ class FanHome extends Component {
 
       findGigs = () =>{
           const results = this.props.gigs.filter(gig =>
-          gig.genre === this.state.genre1.toLowerCase() ||
-          gig.genre === this.state.genre2.toLowerCase() ||
-          gig.genre === this.state.genre3.toLowerCase())
+          gig.genre.toLowerCase() === this.state.genre1.toLowerCase() ||
+          gig.genre.toLowerCase() === this.state.genre2.toLowerCase() ||
+          gig.genre.toLowerCase() === this.state.genre3.toLowerCase())
               this.setState({
                   gigsList: results
               });
@@ -129,6 +130,10 @@ class FanHome extends Component {
           console.log(error);
         }
         alert("You sent an RSVP.");
+        // this.getGenres();
+        // this.getAllFans();
+        this.getAllRSVPs();
+        this.getAllGigs();
       } 
 
       reviewGig = (gig_id) =>{
@@ -205,6 +210,7 @@ class FanHome extends Component {
               this.setState({
                 allRSVPs: response.data
               });
+              this.forceUpdate();
               this.findRSVPs();
             }
             catch(error){
@@ -227,25 +233,53 @@ class FanHome extends Component {
           }
 
           findFanGigIDs = () =>{
-            this.state.fanRSVPs.forEach(element =>
+            // this.state.fanRSVPs.forEach(element =>
+            //     this.state.fanGigs.push(element.gig)
+            //   );
+            this.state.fanRSVPs.map(element =>
                 this.state.fanGigs.push(element.gig)
               );
               console.log("findFanGigIDs");
               console.log(this.state.fanGigs);
-            this.listRSVPGigs();
+            // this.listRSVPGigs();
+            this.getAllGigs();
           }
+
+          getAllGigs = async () => {
+            try{
+                const jwt = localStorage.getItem('token');
+                let response = await axios.get(`http://127.0.0.1:8000/api/gigs/`, {headers: {Authorization: 'Bearer ' + jwt}});
+                this.setState({
+                  gigs: response.data
+                });
+                console.log("getAllGigs");
+                console.log(this.state.gigs);
+                this.listRSVPGigs();
+              }
+              catch(error){
+                console.log(error);
+              }
+              
+            }
+    
+        // findFan = () =>{
+        //     this.props.findFan();
+        // }
 
           listRSVPGigs = () => {
             // debugger;
             for(let i = 0; i < this.state.fanGigs.length; i++){
-              const results = this.props.gigs.filter(gig => gig.id === this.state.fanGigs[i]);
+              const results = this.state.gigs.filter(gig => gig.id === this.state.fanGigs[i]);
+              console.log("gigs");
+              console.log(this.props.gigs);
+              console.log("results");
+              console.log(results);
               this.state.RSVPGigs.push(results);
             }       
             console.log("listRSVPGIG");
             console.log(this.state.RSVPGigs);
             this.tryGeocode();
           }
-
 
           tryGeocode = () =>{
             for(let i = 0; i<this.state.RSVPGigs.length; i++){
