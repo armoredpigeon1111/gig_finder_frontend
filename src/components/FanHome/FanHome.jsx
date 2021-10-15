@@ -113,8 +113,8 @@ class FanHome extends Component {
         catch(error){
           console.log(error);
         }
-        this.getGenres();
         alert("Like Added");
+        
       } 
 
       RSVPGig = async (gig_id) => {

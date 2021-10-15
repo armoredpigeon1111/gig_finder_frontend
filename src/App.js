@@ -11,6 +11,8 @@ import axios from 'axios';
 import jwtDecode from "jwt-decode";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./App.css"
+import "./components/TitleBar/TitleBar"
+import TitleBar from './components/TitleBar/TitleBar';
 
 class App extends Component {
   constructor(props) {
@@ -93,6 +95,21 @@ getAllMusicians = async () => {
   this.findMusician();
 }
 
+findFan = () =>{
+  const results = this.state.fans.filter(fan =>
+  fan.user === this.state.user_id)
+  console.log("Find Fan App");
+  console.log(results);
+  console.log(results.length);
+  if(results.length !== 0){
+      this.state.existingFan = true;
+      this.setState({
+          existingFan: true
+      });
+      this.forceUpdate();
+  }
+}
+
 getAllFans = async () => {
   try{
     const jwt = localStorage.getItem('token');
@@ -107,20 +124,7 @@ getAllFans = async () => {
   this.findFan();
 }
 
-findFan = () =>{
-    const results = this.state.fans.filter(fan =>
-    fan.user === this.state.user_id)
-    console.log("Find Fan App");
-    console.log(results);
-    console.log(results.length);
-    if(results.length !== 0){
-        this.state.existingFan = true;
-        this.setState({
-            existingFan: true
-        });
-        this.forceUpdate();
-    }
-}
+
 
 getUserType = async (user_id) => {
   try{
@@ -142,6 +146,7 @@ getUserType = async (user_id) => {
     return ( 
 
       <div>
+        <TitleBar />
         <NavBar user={user} logoutUser={this.logoutUser}/>
         <BrowserRouter>
           <Switch>

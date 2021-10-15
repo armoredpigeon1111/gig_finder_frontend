@@ -26,8 +26,8 @@ class Fan extends Component {
             this.setState({
               gigs: response.data
             });
-            console.log("getAllGigs");
-            console.log(this.state.gigs);
+            // console.log("getAllGigs");
+            // console.log(this.state.gigs);
           }
           catch(error){
             console.log(error);
