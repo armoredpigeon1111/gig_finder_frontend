@@ -67,6 +67,7 @@ logoutUser = () =>{
     existingMusician: false,
     existingFan: false
   });
+  window.location='/';
   console.log("Logout");
 }
 

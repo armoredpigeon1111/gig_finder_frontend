@@ -11,8 +11,8 @@ class FanHome extends Component {
         super(props);
         this.state = { 
             fans: [],
-            // fan_id: this.props.fan_id,
-            fan_id:1, 
+            fan_id: this.props.fan_id,
+            // fan_id:1, 
             genre1: "",
             genre2: "",
             genre3: "",
@@ -63,12 +63,14 @@ class FanHome extends Component {
 
     //Get matching fan ID
     findFan = () =>{
+          debugger;
           const results = this.state.fans.filter(fan =>
           fan.user === this.props.user_id)
           if(results.length !== 0){
               this.setState({
                   fan_id: results[0].id
-              });                       
+              });  
+              this.forceUpdate();                     
           } 
       }
 
@@ -114,7 +116,7 @@ class FanHome extends Component {
           console.log(error);
         }
         alert("Like Added");
-        
+
       } 
 
       RSVPGig = async (gig_id) => {
@@ -311,6 +313,11 @@ class FanHome extends Component {
       
           } 
 
+          reload= ()=>{
+            this.getAllRSVPs();
+            this.getAllGigs();
+          }
+
 
     render() { 
         return ( 
@@ -351,7 +358,7 @@ class FanHome extends Component {
                     })}
                 </tbody>
             </table>
-            
+            <button className="btn btn-danger" onClick={()=> this.reload()}>Reload</button>
             {this.state.showReview?
             <ReviewGig gig_id={this.state.reviewGigID} closeReview={this.closeReview}/>
             :
