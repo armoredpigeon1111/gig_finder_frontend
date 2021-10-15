@@ -11,7 +11,7 @@ class FanHome extends Component {
         super(props);
         this.state = { 
             fans: [],
-            fan_id: this.props.fan_id,
+            fan_id: this.props.fan_id, //experimenting with props instead of null
             // fan_id:1, 
             genre1: "",
             genre2: "",
@@ -358,7 +358,7 @@ class FanHome extends Component {
                     })}
                 </tbody>
             </table>
-            <button className="btn btn-danger" onClick={()=> this.reload()}>Reload</button>
+            
             {this.state.showReview?
             <ReviewGig gig_id={this.state.reviewGigID} closeReview={this.closeReview}/>
             :
@@ -370,7 +370,7 @@ class FanHome extends Component {
             :
             null
             } 
-            
+            <button className="btn btn-danger" onClick={()=> this.reload()}>Reload</button>
             <FanRSVPMap geocodeData={this.state.geocodeData} lat={this.state.lat} long={this.state.long}/>
             </div>
          );
