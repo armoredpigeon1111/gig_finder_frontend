@@ -11,7 +11,8 @@ class FanHome extends Component {
         super(props);
         this.state = { 
             fans: [],
-            fan_id: this.props.fan_id, 
+            // fan_id: this.props.fan_id,
+            fan_id:1, 
             genre1: "",
             genre2: "",
             genre3: "",
@@ -50,13 +51,13 @@ class FanHome extends Component {
           this.setState({
             fans: response.data
           });
-          
+          this.findFan();
+          this.getGenres();
         }
         catch(error){
           console.log(error);
         }
-        this.findFan();
-        this.getGenres();
+
       }
 
     //Get matching fan ID
@@ -240,7 +241,7 @@ class FanHome extends Component {
               const results = this.props.gigs.filter(gig => gig.id === this.state.fanGigs[i]);
               this.state.RSVPGigs.push(results);
             }       
-            console.log("RSVPGIG");
+            console.log("listRSVPGIG");
             console.log(this.state.RSVPGigs);
             this.tryGeocode();
           }
@@ -249,10 +250,10 @@ class FanHome extends Component {
           tryGeocode = () =>{
             for(let i = 0; i<this.state.RSVPGigs.length; i++){
               console.log("tryGeocode");
-              console.log(this.state.RSVPGigs[0][i].street);
-              console.log(this.state.RSVPGigs[0][i].city);
-              console.log(this.state.RSVPGigs[0][i].state);
-              this.getGeocode(this.state.RSVPGigs[0][i].street, this.state.RSVPGigs[0][i].city, this.state.RSVPGigs[0][i].state)
+              console.log(this.state.RSVPGigs[i][0].street);
+              console.log(this.state.RSVPGigs[i][0].city);
+              console.log(this.state.RSVPGigs[i][0].state);
+              this.getGeocode(this.state.RSVPGigs[i][0].street, this.state.RSVPGigs[i][0].city, this.state.RSVPGigs[i][0].state)
             }
           }
 

@@ -63,6 +63,7 @@ logoutUser = () =>{
     user: null,
     user_id: null,
     existingMusician: false,
+    existingFan: false
   });
   console.log("Logout");
 }
