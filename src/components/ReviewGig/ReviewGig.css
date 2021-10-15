@@ -1,0 +1,14 @@
+.reviewGig{
+    background-color: beige;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+}
+
+.reviewGig label{
+    margin-right: 5px;
+}
+
+.reviewGig input{
+    margin-right: 5px;
+}

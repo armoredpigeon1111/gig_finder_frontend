@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './ReviewGig.css'
 
 class ReviewGig extends Component {
     constructor(props) {
@@ -38,12 +39,12 @@ class ReviewGig extends Component {
 
     render() { 
         return ( 
-            <div>
+            <div className="reviewGig">
                 <h1>Review Gig</h1>
                 <form onSubmit={(event) => this.handleSubmit(event)}>
-                <label>Leave Review</label>
+                <label><strong>Leave Review</strong></label>
                 <input type="textarea" name="body" rows="4" cols="50" onChange={this.handleChange} value={this.state.body} />
-                <button type="submit">Submit</button>
+                <button className="btn btn-primary" type="submit">Submit</button>
                 </form>
             </div>
          );
