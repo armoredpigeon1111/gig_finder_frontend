@@ -20,7 +20,9 @@ class FanRegister extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.createProfile();
+        this.props.findFanExist();
         this.props.findFan();
+        this.props.setExistingFan();
     }
 
     createProfile = async () => {

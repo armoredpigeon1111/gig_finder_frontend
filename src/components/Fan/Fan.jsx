@@ -22,6 +22,10 @@ class Fan extends Component {
         console.log(this.state.existingFan);
     }
 
+    componentDidUpdate(){
+      this.state.existingFan = this.props.existingFan;
+    }
+
     getAllGigs = async () => {
         try{
             const jwt = localStorage.getItem('token');
@@ -38,11 +42,17 @@ class Fan extends Component {
           
         }
 
-    findFan = () =>{
+    findFanExist = () =>{ //changing to findFanExist from findFan
         this.props.findFan();
     }
 
 //experiment
+
+setExistingFan = () =>{
+  this.setState({
+    existingFan: true
+  })
+}
 
 getAllFans = async () => {
     try{
@@ -52,6 +62,9 @@ getAllFans = async () => {
         fans: response.data
       });
       this.findFan();
+      //experimental
+      this.findFanExist();
+
     //   this.getGenres();
     }
     catch(error){
@@ -79,14 +92,14 @@ findFan = () =>{
     render() { 
         return ( 
             <div>
-                <FanRegister user_id={this.props.user_id} findFan={this.findFan}/>
-                <FanHome fan_id={this.state.fan_id} user_id={this.props.user_id} gigs={this.state.gigs}/>
+                {/* <FanRegister user_id={this.props.user_id} findFan={this.findFan}/>
+                <FanHome fan_id={this.state.fan_id} user_id={this.props.user_id} gigs={this.state.gigs}/> */}
 
-                {/* {this.state.existingFan ?
+                {this.state.existingFan ?
                 <FanHome user_id={this.props.user_id} gigs={this.state.gigs}/>
                 :
-                <FanRegister user_id={this.props.user_id} findFan={this.findFan}/>
-                } */}
+                <FanRegister setExistingFan={this.setExistingFan} user_id={this.props.user_id} findFanExist={this.findFanExist} findFan={this.findFan}/>
+                }
                 
             </div>
          );

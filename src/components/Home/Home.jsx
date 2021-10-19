@@ -6,12 +6,14 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            
+            existingFan: this.props.existingFan,
          }
     }
 
     componentDidMount(){
-
+        this.props.findFan();
+        console.log("home Exist fan");
+        console.log(this.state.existingFan);
     }
 
     getAllMusicians = () =>{
